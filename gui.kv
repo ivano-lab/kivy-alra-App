@@ -1,0 +1,360 @@
+<MyRV@RecycleView>:
+    viewclass: 'SelectableButton'
+    SelectableRecycleGridLayout:
+        cols: 1
+        default_size: None, dp(26)
+        default_size_hint: 1, None
+        size_hint_y: None
+        height: self.minimum_height
+
+<rv>:
+    BoxLayout:
+        orientation: 'vertical'
+        GridLayout:
+            size_hint: 1, None
+            height: 25
+            cols: 2
+            Label:
+                size_hint_x: 0.2
+                text: 'ID'
+            Label:
+                size_hint_x: 0.8
+                text: 'Produto'
+        BoxLayout:
+            MyRV:
+                size_hint_x: 0.2
+                data: [{'text': str(x)} for x in root.col1]
+            MyRV:
+                size_hint_x: 0.8
+                data: [{'text': str(x)} for x in root.col2]
+        Button:
+            size_hint_y: 0.2
+            text: 'Voltar'
+            on_press: root.manager.current = 'venda'
+
+
+<prd>:
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            size_hint_y: 0.2
+            text: 'ASSOCIAR COMPRA AO PRODUTOR: \n----------------------------------------'
+        GridLayout:
+            size_hint: 1, None
+            height: 25
+            cols: 2
+            Label:
+                size_hint_x: 0.2
+                text: 'ID'
+            Label:
+                size_hint_x: 0.8
+                text: 'Produtor'
+        BoxLayout:
+            MyRV:
+                size_hint_x: 0.2
+                data: [{'text': str(x)} for x in root.col1]
+            MyRV:
+                size_hint_x: 0.8
+                data: [{'text': str(x)} for x in root.col2]
+        Button:
+            size_hint_y: 0.2
+            text: 'Voltar'
+            on_press: root.manager.current = 'venda'
+
+<MenuScreen>:
+    BoxLayout:
+        orientation:'vertical'
+        Label:
+            text:'LOGAR COMO:'
+        Button:
+            text: 'Produtor'
+            on_press: root.manager.current = 'produtorlogin'
+        Button:
+            text: 'Revenda'
+            on_press: root.manager.current = 'revendalogin'
+        Button:
+            text: 'Fiscalização'
+            on_press: root.manager.current = 'fiscalizacaologin'
+        Button:
+            text: 'Fechar[x]'
+            on_press: app.root_window.close()
+
+<ProdutorLoginScreen>:
+    txt_nome: txt_nome
+    txt_sen: txt_sen
+    BoxLayout:
+        orientation:'vertical'
+        Label:
+            text:'Login Produtor'
+        TextInput:
+            id: txt_nome
+            hint_text: 'Usuário: '
+        TextInput:
+            id: txt_sen
+            hint_text: 'Senha: '
+            password: True
+            password_mask: '*'
+        Button:
+            text: 'Entrar'
+            on_press: root.manager.current = 'produtor'
+        Button:
+            text: 'Cadastrar'
+            on_press: root.manager.current = 'create'
+        Button:
+            text: 'Voltar ao Menu'
+            on_press: root.manager.current = 'menu'
+        Button:
+            text: 'Fechar[x]'
+            on_press: app.root_window.close()
+
+<ProdutorScreen>:
+    BoxLayout:
+        orientation:'vertical'
+        Label:
+            text: 'Produtor Logado Com Sucesso\nExibir Dados do Produtor\n\nAdicionar rollbar aqui!'
+            halign: 'center'
+        Button:
+            text: 'Ver Pendências'
+            size_hint_y: 0.2
+            #on_press: root.manager.current = 'vendas'
+        Button:
+            text: 'Voltar ao Menu'
+            size_hint_y: 0.2
+            on_press: root.manager.current = 'menu'
+        Button:
+            text: 'Fechar[x]'
+            size_hint_y: 0.2
+            on_press: app.root_window.close()
+
+<RevendaLoginScreen>:
+    txt_nome: txt_nome
+    txt_sen: txt_sen
+    BoxLayout:
+        orientation:'vertical'
+        Label:
+            text:'Login Revendedor'
+        TextInput:
+            id: txt_nome
+            hint_text: 'Usuário: '
+        TextInput:
+            id: txt_sen
+            hint_text: 'Senha: '
+            password: True
+            password_mask: '*'
+        Button:
+            text: 'Entrar'
+            on_press: root.manager.current = 'revenda'
+        Button:
+            text: 'Cadastrar'
+            on_press: root.manager.current = 'create'
+        Button:
+            text: 'Voltar ao Menu'
+            on_press: root.manager.current = 'menu'
+        Button:
+            text: 'Fechar[x]'
+            on_press: app.root_window.close()
+
+<RevendaScreen>:
+    BoxLayout:
+        orientation:'vertical'
+        Label:
+            text: 'Logado com Revendedor#1'
+        Button:
+            text: 'Registrar Venda'
+            size_hint_y: 0.2
+            on_press: root.manager.current = 'venda'
+        Button:
+            text: 'Cadastrar Produto'
+            size_hint_y: 0.2
+            on_press: root.manager.current = 'cadastrarproduto'
+        Button:
+            text: 'Voltar ao Menu'
+            size_hint_y: 0.2
+            on_press: root.manager.current = 'menu'
+        Button:
+            text: 'Fechar[x]'
+            size_hint_y: 0.2
+            on_press: app.root_window.close()
+
+<FiscalizacaoLoginScreen>:
+    txt_nome: txt_nome
+    txt_sen: txt_sen
+    BoxLayout:
+        orientation:'vertical'
+        Label:
+            text:'Login Fiscalizador'
+        TextInput:
+            id: txt_nome
+            hint_text: 'Usuário: '
+        TextInput:
+            id: txt_sen
+            hint_text: 'Senha: '
+            password: True
+            password_mask: '*'
+        Button:
+            text: 'Entrar'
+            on_press: root.manager.current = 'fiscalizacao'
+        Button:
+            text: 'Cadastrar'
+            on_press: root.manager.current = 'create'
+        Button:
+            text: 'Voltar ao Menu'
+            on_press: root.manager.current = 'menu'
+        Button:
+            text: 'Fechar[x]'
+            on_press: app.root_window.close()
+
+<FiscalizacaoScreen>:
+    BoxLayout:
+        orientation:'vertical'
+        Label:
+            text: 'Logado Como Fiscalizador#1'
+        Button:
+            text: 'Ver Produtores'
+            size_hint_y: 0.2
+        Button:
+            text: 'Cadastrar Produtor'
+            size_hint_y: 0.2
+            on_press: app.root.current = 'create'
+        Button:
+            text: 'Atualizar dados'
+            size_hint_y: 0.2
+        Button:
+            text: 'Registrar Devolução'
+            size_hint_y: 0.2
+        Button:
+            text: 'Voltar ao Menu'
+            size_hint_y: 0.2
+            on_press: root.manager.current = 'menu'
+        Button:
+            text: 'Sair'
+            size_hint_y: 0.2
+            on_press: app.root_window.close()
+
+
+<create_sc>:
+    txt_nome: txt_nome
+    txt_end: txt_end
+    txt_cpf: txt_cpf
+    txt_insc: txt_insc
+    txt_coord: txt_coord
+    txt_log: txt_log
+    txt_sen: txt_sen
+    lbl_resposta: lbl_resposta
+    BoxLayout:
+        orientation: 'vertical'
+        TextInput:
+            hint_text: 'Nome do Produtor: '
+            id: txt_nome
+        TextInput:
+            hint_text: 'Endereço do Produtor: '
+            id: txt_end
+        TextInput:
+            hint_text: 'CPF ou CNPJ do Produtor: '
+            id: txt_cpf
+        TextInput:
+            hint_text: 'Inscrição Estadual: '
+            id: txt_insc
+        TextInput:
+            hint_text: 'Coordenadas Geográficas: '
+            id: txt_coord
+        TextInput:
+            hint_text: 'Login:'
+            id: txt_log
+        TextInput:
+            hint_text: 'Senha: '
+            id: txt_sen
+            password: True
+            password_mask: '*'
+        Label:
+            text: 'Aguardando Entrada de Dados...'
+            id: lbl_resposta
+        Button:
+            text: 'Cadastrar Dados'
+            on_press: app.inserir_dados(txt_nome.text, txt_end.text, txt_cpf.text, txt_insc.text, txt_coord.text, txt_log.text, txt_sen.text)
+            on_release: txt_nome.text = ''
+            on_release: txt_end.text = ''
+            on_release: txt_cpf.text = ''
+            on_release: txt_insc.text = ''
+            on_release: txt_coord.text = ''
+            on_release: txt_log.text = ''
+            on_release: txt_sen.text = ''
+        Button:
+            text: 'Voltar'
+            on_press: root.manager.current = 'produtorlogin'
+        Button:
+            text: 'Fechar[x]'
+            on_press: app.root_window.close()
+
+<CadastrarProdutoScreen>:
+    txt_nmpd: txt_nmpd
+    txt_gtin: txt_gtin
+    lbl_resposta: lbl_resposta
+    BoxLayout:
+        orientation: 'vertical'
+        TextInput:
+            hint_text: 'Produto'
+            id: txt_nmpd
+        TextInput:
+            hint_text: 'gtin'
+            id: txt_gtin
+        Label:
+            text: 'Aguardando Entrada de Dados...'
+            id: lbl_resposta
+        Button:
+            text: 'Cadastrar Produto'
+            on_press: app.cadastrar_produto(txt_nmpd.text, txt_gtin.text)
+        Button:
+            text: 'Voltar'
+            on_press: root.manager.current = 'venda'
+
+<EfetuarVendaScreen>:
+    txt_prod: txt_prod
+    txt_quant: txt_quant
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: 'Logado como Revendedor#1'
+        TextInput:
+            hint_text: 'Produto'
+            id: txt_prod
+        Button:
+            text: 'Selecionar Produto'
+            #on_press: root.manager.current = 'prateleira'
+            on_press: app.selecionar_todos_produtos()
+        TextInput:
+            hint_text: 'Quantidade'
+            id: txt_quant
+        Label:
+            text: 'Aguardando Entrada de Dados...'
+            id: lbl_resposta
+        Button:
+            text: 'Adicionar Produto'
+            on_release: txt_prod.text = ''
+            on_release: txt_quant.text = ''
+        Button:
+            text: 'Finalizar Venda'
+            on_press: app.selecionar_todos_produtores()
+        Button:
+            text: 'Voltar'
+            on_press: root.manager.current = 'revenda'
+        Button:
+            text: 'Fechar[x]'
+            on_press: app.root_window.close()
+
+<CompradorScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: 'Associar compra ao Produtor:'
+        Button:
+            text: 'Produtor#1'
+        Button:
+            text: 'Produtor#2'
+        Button:
+            text: 'Produtor#3'
+        Button:
+            text: 'Produtor#4'
+        Button:
+            text: 'Produtor#5'
+
