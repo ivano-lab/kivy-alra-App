@@ -60,6 +60,21 @@ class prd(Screen):
                 self.col1.append(row[0])
                 self.col2.append(row[1])
 
+class CadastroCompletoProdutor(Screen):
+    id = ObjectProperty(None)
+    nome = ObjectProperty(None)
+    end = ObjectProperty(None)
+    cpf = ObjectProperty(None)
+    insc = ObjectProperty(None)
+    coord = ObjectProperty(None)
+
+    def atualizar_form(self, t1, t2, t3, t4, t5):
+        self.ids.nome.text = 'Produtor: ' + t1
+        self.ids.end.text = 'endereço: ' + t2
+        self.ids.cpf.text = 'CPF ou CNPJ: ' + t3
+        self.ids.insc.text = 'Inscrição Estadual: ' + t4
+        self.ids.coord.text = 'Coordenadas Geográficas: ' + t5
+
 
 class ProdutorLoginScreen(Screen):
     txt_nome = ObjectProperty(None)
@@ -78,11 +93,9 @@ class RevendaScreen(Screen):
     lbl_resposta = ObjectProperty(None)
 
 class EfetuarVendaScreen(Screen):
+    txt_id = ObjectProperty(None)
     txt_prod = ObjectProperty(None)
     txt_quant = ObjectProperty(None)
-
-
-class CompradorScreen(Screen):
     lbl_resposta = ObjectProperty(None)
 
 
@@ -90,6 +103,7 @@ class FiscalizacaoLoginScreen(Screen):
     txt_nome = ObjectProperty(None)
     txt_sen = ObjectProperty(None)
     lbl_resposta = ObjectProperty(None)
+
 
 class FiscalizacaoScreen(Screen):
     lbl_resposta = ObjectProperty(None)
@@ -118,7 +132,7 @@ sm.add_widget(RevendaScreen(name='revenda'))
 sm.add_widget(EfetuarVendaScreen(name='venda'))
 sm.add_widget(rv(name='rv'))
 sm.add_widget(prd(name='prd'))
-sm.add_widget(CompradorScreen(name='comprador'))
+sm.add_widget(CadastroCompletoProdutor(name='cadastrocompletoprodutor'))
 sm.add_widget(CadastrarProdutoScreen(name='cadastrarproduto'))
 sm.add_widget(FiscalizacaoLoginScreen(name='fiscalizacaologin'))
 sm.add_widget(FiscalizacaoScreen(name='fiscalizacao'))
@@ -190,6 +204,15 @@ class CrudKivy(App):
         self.conexao.commit()
         edt.lbl_resposta.text = 'Produto Cadastrado Com Sucesso!'
 
+
+    def dados_produtor(self, id, slc):
+        self.cursor.execute("SELECT * FROM produtores WHERE id = ?", (id))
+        self.conexao.commit()
+        records = self.cursor.fetchall()
+        slc = sm.get_screen('cadastrocompletoprodutor')
+        for row in records:
+            slc.atualizar_form(str(row[1]), str(row[2]), str(row[3]), str(row[4]), str(row[5]))
+
     def registrar_venda(self, txt_prod, txt_quant, txt_proid):
         edt = sm.get_screen('venda')
         data = date.today()
@@ -205,8 +228,6 @@ class CrudKivy(App):
         self.conexao.commit()
         edt.lbl_resposta.text = 'Venda Efetuada Com Sucesso!'
 
-    def dados_produtor(self):
-        pass
 
     def build(self):
         App.title = "ALRA"

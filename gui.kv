@@ -58,6 +58,10 @@
                 data: [{'text': str(x)} for x in root.col2]
         Button:
             size_hint_y: 0.2
+            text: 'Ver Dados Completos'
+            on_press: root.manager.current = 'cadastrocompletoprodutor'
+        Button:
+            size_hint_y: 0.2
             text: 'Voltar'
             on_press: root.manager.current = 'venda'
 
@@ -111,7 +115,7 @@
     BoxLayout:
         orientation:'vertical'
         Label:
-            text: 'Produtor Logado Com Sucesso\nExibir Dados do Produtor\n\nAdicionar rollbar aqui!'
+            text: 'Produtor Logado Com Sucesso!\nExibir Dados do Produtor\n\nAdicionar rollbar aqui!'
             halign: 'center'
         Button:
             text: 'Ver Pendências'
@@ -125,6 +129,40 @@
             text: 'Fechar[x]'
             size_hint_y: 0.2
             on_press: app.root_window.close()
+
+<CadastroCompletoProdutor>:
+    id: id
+    nome: nome
+    end: end
+    cpf: cpf
+    insc: insc
+    coord: coord
+    BoxLayout:
+        orientation: 'vertical'
+        TextInput:
+            id: id
+            hint_text: 'ID'
+        Label:
+            id: nome
+            text: 'Produtor:'
+        Label:
+            id: end
+            text: 'Endereço:'
+        Label:
+            id: cpf
+            text: 'CPF ou CNPJ:'
+        Label:
+            id: insc
+            text: 'Inscrição Estadual:'
+        Label:
+            id: coord
+            text: 'Coordenadas Geográficas:'
+        Button:
+            text: 'Visualizar'
+            on_press: app.dados_produtor(id.text, 'selecionar')
+        Button:
+            text: 'Voltar'
+            on_press: root.manager.current = 'venda'
 
 <RevendaLoginScreen>:
     txt_nome: txt_nome
@@ -158,7 +196,7 @@
     BoxLayout:
         orientation:'vertical'
         Label:
-            text: 'Logado com Revendedor#1'
+            text: 'Logado como Revendedor#1'
         Button:
             text: 'Registrar Venda'
             size_hint_y: 0.2
@@ -311,6 +349,7 @@
 <EfetuarVendaScreen>:
     txt_prod: txt_prod
     txt_quant: txt_quant
+    txt_id: txt_id
     BoxLayout:
         orientation: 'vertical'
         Label:
@@ -319,42 +358,29 @@
             hint_text: 'Produto'
             id: txt_prod
         Button:
-            text: 'Selecionar Produto'
-            #on_press: root.manager.current = 'prateleira'
+            text: 'Visualizar Produtos'
             on_press: app.selecionar_todos_produtos()
         TextInput:
             hint_text: 'Quantidade'
             id: txt_quant
+        TextInput:
+            hint_text: 'Associar Venda ao Produtor: [insira id]'
+            id: txt_id
+        Button:
+            text: 'Visualizar Produtores'
+            on_press: app.selecionar_todos_produtores()
         Label:
             text: 'Aguardando Entrada de Dados...'
             id: lbl_resposta
         Button:
-            text: 'Adicionar Produto'
+            text: 'Efetuar Venda'
+            on_press: app.registrar_venda(txt_prod, txt_quant, txt_id)
             on_release: txt_prod.text = ''
             on_release: txt_quant.text = ''
-        Button:
-            text: 'Finalizar Venda'
-            on_press: app.selecionar_todos_produtores()
         Button:
             text: 'Voltar'
             on_press: root.manager.current = 'revenda'
         Button:
             text: 'Fechar[x]'
             on_press: app.root_window.close()
-
-<CompradorScreen>:
-    BoxLayout:
-        orientation: 'vertical'
-        Label:
-            text: 'Associar compra ao Produtor:'
-        Button:
-            text: 'Produtor#1'
-        Button:
-            text: 'Produtor#2'
-        Button:
-            text: 'Produtor#3'
-        Button:
-            text: 'Produtor#4'
-        Button:
-            text: 'Produtor#5'
 
