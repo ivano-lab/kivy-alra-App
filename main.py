@@ -8,7 +8,7 @@ from kivy.uix.label import Label
 from kivy.core.window import Window
 from kivy.lang import Builder
 from kivy.uix.button import Button
-from kivy.uix.screenmanager import ScreenManager, Screen, WipeTransition
+from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.properties import ObjectProperty, ListProperty
 from kivy.uix.recyclegridlayout import RecycleGridLayout
 from kivy.uix.recycleview.views import RecycleDataViewBehavior
@@ -96,6 +96,10 @@ class EfetuarVendaScreen(Screen):
     txt_id = ObjectProperty(None)
     txt_prod = ObjectProperty(None)
     txt_quant = ObjectProperty(None)
+    data = ObjectProperty(None)
+    devolucao = ObjectProperty(None)
+    data_compra = ObjectProperty(None)
+    data_devolucao = ObjectProperty(None)
     lbl_resposta = ObjectProperty(None)
 
 
@@ -213,13 +217,17 @@ class CrudKivy(App):
         for row in records:
             slc.atualizar_form(str(row[1]), str(row[2]), str(row[3]), str(row[4]), str(row[5]))
 
-    def registrar_venda(self, txt_prod, txt_quant, txt_proid):
+    def registrar_venda(self, txt_prod, txt_quant, txt_proid, data, devolucao, data_compra, data_devolucao):
         edt = sm.get_screen('venda')
         data = date.today()
-        data_compra = f'{data.day}/{data.month}/{data.year}'
+        #data_compra = f'{str(data.day)}/{str(data.month)}/{str(data.year)}'
+        data_compra = data.strftime('%d/%m/%Y')
         relativo = relativedelta(days=+365)
         devolucao = data + relativo
-        data_devolucao = f'{devolucao.day}/{devolucao.month}/{devolucao.year}'
+        #data_devolucao = f'{str(devolucao.day)}/{str(devolucao.month)}/{str(devolucao.year)}'
+        data_devolucao = devolucao.strftime('%d/%m/%Y')
+        data = str(data)
+        devolucao = str(devolucao)
         self.cursor.execute("""INSERT INTO pendencias
                                 (produto, quantidade, produtor_id, 
                                 data, devolucao, data_compra, data_devolucao) VALUES 
