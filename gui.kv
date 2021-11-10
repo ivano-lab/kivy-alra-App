@@ -84,23 +84,31 @@
             on_press: app.root_window.close()
 
 <ProdutorLoginScreen>:
-    txt_nome: txt_nome
+    txt_id: txt_id
+    txt_log: txt_log
     txt_sen: txt_sen
     BoxLayout:
         orientation:'vertical'
         Label:
             text:'Login Produtor'
         TextInput:
-            id: txt_nome
+            id: txt_id
+            hint_text: 'ID'
+        TextInput:
+            id: txt_log
             hint_text: 'Usuário: '
         TextInput:
             id: txt_sen
             hint_text: 'Senha: '
             password: True
             password_mask: '*'
+        Label:
+            text: ''
+            id: lbl_respota
         Button:
             text: 'Entrar'
-            on_press: root.manager.current = 'produtor'
+            on_press: app.produtor_logado(txt_id.text, txt_log.text, txt_sen.text, 'selecionar')
+            #on_press: root.manager.current = 'produtor'
         Button:
             text: 'Cadastrar'
             on_press: root.manager.current = 'create'
@@ -112,11 +120,17 @@
             on_press: app.root_window.close()
 
 <ProdutorScreen>:
+    id: id
+    #nome: nome
+    #end: end
+    #cpf: cpf
+    #insc: insc
+    #coord: coord
     BoxLayout:
-        orientation:'vertical'
+        orientation: 'vertical'
         Label:
-            text: 'Produtor Logado Com Sucesso!\nExibir Dados do Produtor\n\nAdicionar rollbar aqui!'
-            halign: 'center'
+            id: nome
+            text: 'Produtor:'
         Button:
             text: 'Ver Pendências'
             size_hint_y: 0.2

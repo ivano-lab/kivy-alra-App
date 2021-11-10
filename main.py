@@ -77,12 +77,34 @@ class CadastroCompletoProdutor(Screen):
 
 
 class ProdutorLoginScreen(Screen):
-    txt_nome = ObjectProperty(None)
+    txt_id = ObjectProperty(None)
+    txt_log = ObjectProperty(None)
     txt_sen = ObjectProperty(None)
     lbl_resposta = ObjectProperty(None)
 
+    def atualizar_form(self, t1,  t2, t3, t4, t5):
+        self.ids.nome.text = 'Logado Como: ' + t1
+        self.ids.end.text = 'endereço: ' + t2
+        self.ids.cpf.text = 'CPF ou CNPJ: ' + t3
+        self.ids.insc.text = 'Inscrição Estadual: ' + t4
+        self.ids.coord.text = 'Coordenadas Geográficas: ' + t5
+
+
 class ProdutorScreen(Screen):
+    id = ObjectProperty(None)
+    nome = ObjectProperty(None)
+    end = ObjectProperty(None)
+    cpf = ObjectProperty(None)
+    insc = ObjectProperty(None)
+    coord = ObjectProperty(None)
     lbl_resposta = ObjectProperty(None)
+
+    def atualizar_form(self, t1, t2, t3, t4, t5):
+        self.ids.nome.text = 'Produtor: ' + t1
+        self.ids.end.text = 'endereço: ' + t2
+        self.ids.cpf.text = 'CPF ou CNPJ: ' + t3
+        self.ids.insc.text = 'Inscrição Estadual: ' + t4
+        self.ids.coord.text = 'Coordenadas Geográficas: ' + t5
 
 class RevendaLoginScreen(Screen):
     txt_nome = ObjectProperty(None)
@@ -217,24 +239,35 @@ class CrudKivy(App):
         for row in records:
             slc.atualizar_form(str(row[1]), str(row[2]), str(row[3]), str(row[4]), str(row[5]))
 
-    def registrar_venda(self, txt_prod, txt_quant, txt_proid, data, devolucao, data_compra, data_devolucao):
-        edt = sm.get_screen('venda')
-        data = date.today()
-        #data_compra = f'{str(data.day)}/{str(data.month)}/{str(data.year)}'
-        data_compra = data.strftime('%d/%m/%Y')
-        relativo = relativedelta(days=+365)
-        devolucao = data + relativo
-        #data_devolucao = f'{str(devolucao.day)}/{str(devolucao.month)}/{str(devolucao.year)}'
-        data_devolucao = devolucao.strftime('%d/%m/%Y')
-        data = str(data)
-        devolucao = str(devolucao)
-        self.cursor.execute("""INSERT INTO pendencias
-                                (produto, quantidade, produtor_id, 
-                                data, devolucao, data_compra, data_devolucao) VALUES 
-                                (?, ?, ?, ?, ?,?,?)""",
-                            (txt_prod, txt_quant, txt_proid, data, devolucao, data_compra, data_devolucao))
+    def produtor_logado(self, txt_id, txt_log, txt_sen, slc):
+        self.cursor.execute("SELECT * FROM produtores WHERE id = ? and login = ? and senha = ?", (txt_id, txt_log, txt_sen))
         self.conexao.commit()
-        edt.lbl_resposta.text = 'Venda Efetuada Com Sucesso!'
+        records = self.cursor.fetchall()
+        slc = sm.get_screen('produtor')
+        for row in records:
+            slc.atualizar_form(str(row[1], str(row[2]), str(row[3]), str(row[4]), str(row[5]))
+        #slc.lbl_resposta.text = ''
+
+
+
+#    def registrar_venda(self, txt_prod, txt_quant, txt_proid, data, devolucao, data_compra, data_devolucao):
+#        edt = sm.get_screen('venda')
+#        data = date.today()
+#        #data_compra = f'{str(data.day)}/{str(data.month)}/{str(data.year)}'
+#        data_compra = data.strftime('%d/%m/%Y')
+#        relativo = relativedelta(days=+365)
+#        devolucao = data + relativo
+#        #data_devolucao = f'{str(devolucao.day)}/{str(devolucao.month)}/{str(devolucao.year)}'
+#        data_devolucao = devolucao.strftime('%d/%m/%Y')
+#        data = str(data)
+#        devolucao = str(devolucao)
+#        self.cursor.execute("""INSERT INTO pendencias
+#                                (produto, quantidade, produtor_id,
+#                                data, devolucao, data_compra, data_devolucao) VALUES
+#                                (?, ?, ?, ?, ?,?,?)""",
+#                           (txt_prod, txt_quant, txt_proid, data, devolucao, data_compra, data_devolucao))
+#        self.conexao.commit()
+#        edt.lbl_resposta.text = 'Venda Efetuada Com Sucesso!'
 
 
     def build(self):
