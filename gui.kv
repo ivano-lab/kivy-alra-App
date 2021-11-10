@@ -350,10 +350,10 @@
     txt_prod: txt_prod
     txt_quant: txt_quant
     txt_id: txt_id
-    data: data
-    devolucao: devolucao
-    data_compra: data_compra
-    data_devolucao: data_devolucao
+    #data: data
+    #devolucao: devolucao
+    #data_compra: data_compra
+    #data_devolucao: data_devolucao
     BoxLayout:
         orientation: 'vertical'
         Label:
@@ -373,24 +373,24 @@
         Button:
             text: 'Visualizar Produtores'
             on_press: app.selecionar_todos_produtores()
-        Label:
-            text: ''
-            id: data
-        Label:
-            text: ''
-            id: devolucao
-        Label:
-            text: ''
-            id: data_compra
-        Label:
-            text: ''
-            id: data_devolucao
+   #   Label:
+   #        text: ''
+   #        id: data
+   #    Label:
+   #        text: ''
+   #        id: devolucao
+   #    Label:
+   #        text: ''
+   #        id: data_compra
+   #    Label:
+   #        text: ''
+   #        id: data_devolucao
         Label:
             text: 'Aguardando Entrada de Dados...'
             id: lbl_resposta
         Button:
             text: 'Efetuar Venda'
-            on_press: app.registrar_venda(txt_prod, txt_quant, txt_id, data, devolucao, data_compra, data_devolucao)
+            on_press: app.registrar_venda(txt_prod, txt_quant, txt_id)
             on_release: txt_prod.text = ''
             on_release: txt_quant.text = ''
         Button:
