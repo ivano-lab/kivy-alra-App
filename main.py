@@ -23,9 +23,11 @@ class SelectableRecycleGridLayout(FocusBehavior, LayoutSelectionBehavior, Recycl
 class SelectableButton(RecycleDataViewBehavior, Button):
     pass
 
+# funcionando
 class MenuScreen(Screen):
     lbl_resposta = ObjectProperty(None)
 
+# funcionando
 class rv(Screen):
     col1 = ListProperty()
     col2 = ListProperty()
@@ -43,6 +45,7 @@ class rv(Screen):
                 self.col1.append(row[0])
                 self.col2.append(row[1])
 
+# funcionando <bambiarra alert!>
 class prd(Screen):
     col1 = ListProperty('')
     col2 = ListProperty('')
@@ -60,6 +63,7 @@ class prd(Screen):
                 self.col1.append(row[0])
                 self.col2.append(row[1])
 
+# funcionando
 class CadastroCompletoProdutor(Screen):
     id = ObjectProperty(None)
     nome = ObjectProperty(None)
@@ -75,7 +79,7 @@ class CadastroCompletoProdutor(Screen):
         self.ids.insc.text = 'Inscrição Estadual: ' + t4
         self.ids.coord.text = 'Coordenadas Geográficas: ' + t5
 
-
+# funcionando
 class ProdutorLoginScreen(Screen):
     txt_id = ObjectProperty(None)
     txt_log = ObjectProperty(None)
@@ -89,7 +93,7 @@ class ProdutorLoginScreen(Screen):
         self.ids.insc.text = 'Inscrição Estadual: ' + t4
         self.ids.coord.text = 'Coordenadas Geográficas: ' + t5
 
-
+# fase de implementação
 class ProdutorScreen(Screen):
     id = ObjectProperty(None)
     nome = ObjectProperty(None)
@@ -106,14 +110,17 @@ class ProdutorScreen(Screen):
         self.ids.insc.text = 'Inscrição Estadual: ' + t4
         self.ids.coord.text = 'Coordenadas Geográficas: ' + t5
 
+# funcionando
 class RevendaLoginScreen(Screen):
     txt_nome = ObjectProperty(None)
     txt_sen = ObjectProperty(None)
     lbl_resposta = ObjectProperty(None)
 
+# funcionando
 class RevendaScreen(Screen):
     lbl_resposta = ObjectProperty(None)
 
+# fase de implementação
 class EfetuarVendaScreen(Screen):
     txt_id = ObjectProperty(None)
     txt_prod = ObjectProperty(None)
@@ -124,16 +131,17 @@ class EfetuarVendaScreen(Screen):
     data_devolucao = ObjectProperty(None)
     lbl_resposta = ObjectProperty(None)
 
-
+# funcionando
 class FiscalizacaoLoginScreen(Screen):
     txt_nome = ObjectProperty(None)
     txt_sen = ObjectProperty(None)
     lbl_resposta = ObjectProperty(None)
 
-
+# funcionando
 class FiscalizacaoScreen(Screen):
     lbl_resposta = ObjectProperty(None)
 
+# funcionando
 class create_sc(Screen):
     txt_nome = ObjectProperty(None)
     txt_end = ObjectProperty(None)
@@ -144,12 +152,24 @@ class create_sc(Screen):
     txt_sen = ObjectProperty(None)
     lbl_resposta = ObjectProperty(None)
 
+class create_sc2(Screen):
+    txt_nome = ObjectProperty(None)
+    txt_end = ObjectProperty(None)
+    txt_cpf = ObjectProperty(None)
+    txt_insc = ObjectProperty(None)
+    txt_coord = ObjectProperty(None)
+    txt_log = ObjectProperty(None)
+    txt_sen = ObjectProperty(None)
+    lbl_resposta = ObjectProperty(None)
+
+# funcionando
 class CadastrarProdutoScreen(Screen):
     txt_nmpd = ObjectProperty(None)
     txt_gtin = ObjectProperty(None)
 
 sm = ScreenManager()
 sm.add_widget(create_sc(name='create'))
+sm.add_widget(create_sc2(name='create2'))
 sm.add_widget(MenuScreen(name='menu'))
 sm.add_widget(ProdutorLoginScreen(name='produtorlogin'))
 sm.add_widget(ProdutorScreen(name='produtor'))
@@ -238,36 +258,6 @@ class CrudKivy(App):
         slc = sm.get_screen('cadastrocompletoprodutor')
         for row in records:
             slc.atualizar_form(str(row[1]), str(row[2]), str(row[3]), str(row[4]), str(row[5]))
-
-    def produtor_logado(self, txt_id, txt_log, txt_sen, slc):
-        self.cursor.execute("SELECT * FROM produtores WHERE id = ? and login = ? and senha = ?", (txt_id, txt_log, txt_sen))
-        self.conexao.commit()
-        records = self.cursor.fetchall()
-        slc = sm.get_screen('produtor')
-        for row in records:
-            slc.atualizar_form(str(row[1], str(row[2]), str(row[3]), str(row[4]), str(row[5]))
-        #slc.lbl_resposta.text = ''
-
-
-
-#    def registrar_venda(self, txt_prod, txt_quant, txt_proid, data, devolucao, data_compra, data_devolucao):
-#        edt = sm.get_screen('venda')
-#        data = date.today()
-#        #data_compra = f'{str(data.day)}/{str(data.month)}/{str(data.year)}'
-#        data_compra = data.strftime('%d/%m/%Y')
-#        relativo = relativedelta(days=+365)
-#        devolucao = data + relativo
-#        #data_devolucao = f'{str(devolucao.day)}/{str(devolucao.month)}/{str(devolucao.year)}'
-#        data_devolucao = devolucao.strftime('%d/%m/%Y')
-#        data = str(data)
-#        devolucao = str(devolucao)
-#        self.cursor.execute("""INSERT INTO pendencias
-#                                (produto, quantidade, produtor_id,
-#                                data, devolucao, data_compra, data_devolucao) VALUES
-#                                (?, ?, ?, ?, ?,?,?)""",
-#                           (txt_prod, txt_quant, txt_proid, data, devolucao, data_compra, data_devolucao))
-#        self.conexao.commit()
-#        edt.lbl_resposta.text = 'Venda Efetuada Com Sucesso!'
 
 
     def build(self):

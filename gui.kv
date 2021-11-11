@@ -107,8 +107,8 @@
             id: lbl_respota
         Button:
             text: 'Entrar'
-            on_press: app.produtor_logado(txt_id.text, txt_log.text, txt_sen.text, 'selecionar')
-            #on_press: root.manager.current = 'produtor'
+            #on_press: app.produtor_logado(txt_id.text, txt_log.text, txt_sen.text, 'selecionar')
+            on_press: root.manager.current = 'produtor'
         Button:
             text: 'Cadastrar'
             on_press: root.manager.current = 'create'
@@ -262,24 +262,25 @@
         Label:
             text: 'Logado Como Fiscalizador#1'
         Button:
+            text: 'Registrar Devolução'
+            size_hint_y: 0.2
+        Button:
             text: 'Ver Produtores'
             size_hint_y: 0.2
+            on_press: app.selecionar_todos_produtores()
         Button:
             text: 'Cadastrar Produtor'
             size_hint_y: 0.2
-            on_press: app.root.current = 'create'
+            on_press: app.root.current = 'create2'
         Button:
-            text: 'Atualizar dados'
-            size_hint_y: 0.2
-        Button:
-            text: 'Registrar Devolução'
+            text: 'Atualizar dados Produtor'
             size_hint_y: 0.2
         Button:
             text: 'Voltar ao Menu'
             size_hint_y: 0.2
             on_press: root.manager.current = 'menu'
         Button:
-            text: 'Sair'
+            text: 'Fechar[x]'
             size_hint_y: 0.2
             on_press: app.root_window.close()
 
@@ -338,6 +339,61 @@
             text: 'Fechar[x]'
             on_press: app.root_window.close()
 
+<create_sc2>:
+    txt_nome: txt_nome
+    txt_end: txt_end
+    txt_cpf: txt_cpf
+    txt_insc: txt_insc
+    txt_coord: txt_coord
+    txt_log: txt_log
+    txt_sen: txt_sen
+    lbl_resposta: lbl_resposta
+    BoxLayout:
+        orientation: 'vertical'
+        TextInput:
+            hint_text: 'Nome do Produtor: '
+            id: txt_nome
+        TextInput:
+            hint_text: 'Endereço do Produtor: '
+            id: txt_end
+        TextInput:
+            hint_text: 'CPF ou CNPJ do Produtor: '
+            id: txt_cpf
+        TextInput:
+            hint_text: 'Inscrição Estadual: '
+            id: txt_insc
+        TextInput:
+            hint_text: 'Coordenadas Geográficas: '
+            id: txt_coord
+        TextInput:
+            hint_text: 'Login:'
+            id: txt_log
+        TextInput:
+            hint_text: 'Senha: '
+            id: txt_sen
+            password: True
+            password_mask: '*'
+        Label:
+            text: 'Aguardando Entrada de Dados...'
+            id: lbl_resposta
+        Button:
+            text: 'Cadastrar Dados'
+            on_press: app.inserir_dados(txt_nome.text, txt_end.text, txt_cpf.text, txt_insc.text, txt_coord.text, txt_log.text, txt_sen.text)
+            on_release: txt_nome.text = ''
+            on_release: txt_end.text = ''
+            on_release: txt_cpf.text = ''
+            on_release: txt_insc.text = ''
+            on_release: txt_coord.text = ''
+            on_release: txt_log.text = ''
+            on_release: txt_sen.text = ''
+        Button:
+            text: 'Voltar'
+            on_press: root.manager.current = 'fiscalizacao'
+        Button:
+            text: 'Fechar[x]'
+            on_press: app.root_window.close()
+
+
 <CadastrarProdutoScreen>:
     txt_nmpd: txt_nmpd
     txt_gtin: txt_gtin
@@ -358,7 +414,7 @@
             on_press: app.cadastrar_produto(txt_nmpd.text, txt_gtin.text)
         Button:
             text: 'Voltar'
-            on_press: root.manager.current = 'venda'
+            on_press: root.manager.current = 'revenda'
 
 <EfetuarVendaScreen>:
     txt_prod: txt_prod
