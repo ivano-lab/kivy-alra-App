@@ -65,6 +65,39 @@
             text: 'Voltar'
             on_press: root.manager.current = 'venda'
 
+<vsr>:
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            size_hint_y: 0.2
+            text: 'TODOS OS PRODUTORES \n----------------------------------------'
+        GridLayout:
+            size_hint: 1, None
+            height: 25
+            cols: 2
+            Label:
+                size_hint_x: 0.2
+                text: 'ID'
+            Label:
+                size_hint_x: 0.8
+                text: 'Produtor'
+        BoxLayout:
+            MyRV:
+                size_hint_x: 0.2
+                data: [{'text': str(x)} for x in root.col1]
+            MyRV:
+                size_hint_x: 0.8
+                data: [{'text': str(x)} for x in root.col2]
+        Button:
+            size_hint_y: 0.2
+            text: 'Ver Dados Completos'
+            on_press: root.manager.current = 'cadastrocompletoprodutor'
+        Button:
+            size_hint_y: 0.2
+            text: 'Voltar'
+            on_press: root.manager.current = 'fiscalizacao'
+
+
 <MenuScreen>:
     BoxLayout:
         orientation:'vertical'
@@ -267,7 +300,7 @@
         Button:
             text: 'Ver Produtores'
             size_hint_y: 0.2
-            on_press: app.selecionar_todos_produtores()
+            on_press: app.visualizar_todos_produtores()
         Button:
             text: 'Cadastrar Produtor'
             size_hint_y: 0.2

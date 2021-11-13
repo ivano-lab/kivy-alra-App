@@ -63,6 +63,25 @@ class prd(Screen):
                 self.col1.append(row[0])
                 self.col2.append(row[1])
 
+# funcionando <bambiarra alert!>
+class vsr(Screen):
+    col1 = ListProperty('')
+    col2 = ListProperty('')
+    conexao = sqlite3.connect('controle.db')
+
+    def visualizar_produtores(self):
+        self.col1 = []
+        self.col2 = []
+        with self.conexao:
+            cursor = self.conexao.cursor()
+            cursor.execute("SELECT id, nome FROM produtores ORDER BY id ASC")
+            self.conexao.commit()
+            rows = cursor.fetchall()
+            for row in rows:
+                self.col1.append(row[0])
+                self.col2.append(row[1])
+
+
 # funcionando
 class CadastroCompletoProdutor(Screen):
     id = ObjectProperty(None)
@@ -178,6 +197,7 @@ sm.add_widget(RevendaScreen(name='revenda'))
 sm.add_widget(EfetuarVendaScreen(name='venda'))
 sm.add_widget(rv(name='rv'))
 sm.add_widget(prd(name='prd'))
+sm.add_widget(vsr(name='vsr'))
 sm.add_widget(CadastroCompletoProdutor(name='cadastrocompletoprodutor'))
 sm.add_widget(CadastrarProdutoScreen(name='cadastrarproduto'))
 sm.add_widget(FiscalizacaoLoginScreen(name='fiscalizacaologin'))
@@ -195,6 +215,11 @@ class CrudKivy(App):
         prd = sm.get_screen('prd')
         prd.pegar_produtores()
         sm.current = 'prd'
+
+    def visualizar_todos_produtores(self):
+        vsr = sm.get_screen('vsr')
+        vsr.visualizar_produtores()
+        sm.current = 'vsr'
 
     def criar_tabela(self):
         self.conexao = sqlite3.connect('controle.db')
