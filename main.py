@@ -82,7 +82,7 @@ class vsr(Screen):
                 self.col2.append(row[1])
 
 
-# funcionando
+# fase de implementação
 class CadastroCompletoProdutor(Screen):
     id = ObjectProperty(None)
     nome = ObjectProperty(None)
@@ -98,6 +98,22 @@ class CadastroCompletoProdutor(Screen):
         self.ids.insc.text = 'Inscrição Estadual: ' + t4
         self.ids.coord.text = 'Coordenadas Geográficas: ' + t5
 
+class VisualizarCadastroCompleto(Screen):
+    id = ObjectProperty(None)
+    nome = ObjectProperty(None)
+    end = ObjectProperty(None)
+    cpf = ObjectProperty(None)
+    insc = ObjectProperty(None)
+    coord = ObjectProperty(None)
+
+    def atualizar_form(self, t1, t2, t3, t4, t5):
+        self.ids.nome.text = 'Produtor: ' + t1
+        self.ids.end.text = 'endereço: ' + t2
+        self.ids.cpf.text = 'CPF ou CNPJ: ' + t3
+        self.ids.insc.text = 'Inscrição Estadual: ' + t4
+        self.ids.coord.text = 'Coordenadas Geográficas: ' + t5
+
+
 # funcionando
 class ProdutorLoginScreen(Screen):
     txt_id = ObjectProperty(None)
@@ -105,6 +121,7 @@ class ProdutorLoginScreen(Screen):
     txt_sen = ObjectProperty(None)
     lbl_resposta = ObjectProperty(None)
 
+# isso aqui será implementado para efetivação de login
     def atualizar_form(self, t1,  t2, t3, t4, t5):
         self.ids.nome.text = 'Logado Como: ' + t1
         self.ids.end.text = 'endereço: ' + t2
@@ -199,6 +216,7 @@ sm.add_widget(rv(name='rv'))
 sm.add_widget(prd(name='prd'))
 sm.add_widget(vsr(name='vsr'))
 sm.add_widget(CadastroCompletoProdutor(name='cadastrocompletoprodutor'))
+sm.add_widget(VisualizarCadastroCompleto(name='visualizarcadastro'))
 sm.add_widget(CadastrarProdutoScreen(name='cadastrarproduto'))
 sm.add_widget(FiscalizacaoLoginScreen(name='fiscalizacaologin'))
 sm.add_widget(FiscalizacaoScreen(name='fiscalizacao'))
@@ -283,6 +301,15 @@ class CrudKivy(App):
         slc = sm.get_screen('cadastrocompletoprodutor')
         for row in records:
             slc.atualizar_form(str(row[1]), str(row[2]), str(row[3]), str(row[4]), str(row[5]))
+
+    def dados_cadastro(self, id, slc):
+        self.cursor.execute("SELECT * FROM produtores WHERE id = ?", (id))
+        self.conexao.commit()
+        records = self.cursor.fetchall()
+        slc = sm.get_screen('visualizarcadastro')
+        for row in records:
+            slc.atualizar_form(str(row[1]), str(row[2]), str(row[3]), str(row[4]), str(row[5]))
+
 
 
     def build(self):

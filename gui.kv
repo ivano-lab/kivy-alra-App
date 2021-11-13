@@ -70,7 +70,7 @@
         orientation: 'vertical'
         Label:
             size_hint_y: 0.2
-            text: 'TODOS OS PRODUTORES \n----------------------------------------'
+            text: '    TODOS  OS  PRODUTORES  \n----------------------------------------'
         GridLayout:
             size_hint: 1, None
             height: 25
@@ -91,7 +91,7 @@
         Button:
             size_hint_y: 0.2
             text: 'Ver Dados Completos'
-            on_press: root.manager.current = 'cadastrocompletoprodutor'
+            on_press: root.manager.current = 'visualizarcadastro'
         Button:
             size_hint_y: 0.2
             text: 'Voltar'
@@ -210,6 +210,40 @@
         Button:
             text: 'Voltar'
             on_press: root.manager.current = 'venda'
+
+<VisualizarCadastroCompleto>:
+    id: id
+    nome: nome
+    end: end
+    cpf: cpf
+    insc: insc
+    coord: coord
+    BoxLayout:
+        orientation: 'vertical'
+        TextInput:
+            id: id
+            hint_text: 'ID'
+        Label:
+            id: nome
+            text: 'Produtor:'
+        Label:
+            id: end
+            text: 'Endereço:'
+        Label:
+            id: cpf
+            text: 'CPF ou CNPJ:'
+        Label:
+            id: insc
+            text: 'Inscrição Estadual:'
+        Label:
+            id: coord
+            text: 'Coordenadas Geográficas:'
+        Button:
+            text: 'Visualizar'
+            on_press: app.dados_cadastro(id.text, 'selecionar')
+        Button:
+            text: 'Voltar'
+            on_press: root.manager.current = 'vsr'
 
 <RevendaLoginScreen>:
     txt_nome: txt_nome
