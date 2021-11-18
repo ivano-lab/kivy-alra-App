@@ -82,7 +82,7 @@ class vsr(Screen):
                 self.col2.append(row[1])
 
 
-# fase de implementação
+# funcionando
 class CadastroCompletoProdutor(Screen):
     id = ObjectProperty(None)
     nome = ObjectProperty(None)
@@ -139,6 +139,7 @@ class ProdutorScreen(Screen):
     coord = ObjectProperty(None)
     lbl_resposta = ObjectProperty(None)
 
+# fase de implementação
     def atualizar_form(self, t1, t2, t3, t4, t5):
         self.ids.nome.text = 'Produtor: ' + t1
         self.ids.end.text = 'endereço: ' + t2
@@ -188,6 +189,7 @@ class create_sc(Screen):
     txt_sen = ObjectProperty(None)
     lbl_resposta = ObjectProperty(None)
 
+# funcionando
 class create_sc2(Screen):
     txt_nome = ObjectProperty(None)
     txt_end = ObjectProperty(None)
@@ -261,10 +263,10 @@ class CrudKivy(App):
                     produtor_id INTEGER,
                     produto TEXT NOT NULL,
                     quantidade INTEGER NOT NULL,
-                    data CURRENT_TIMESTAMP,
-                    devolucao CURRENT_TIMESTAMP,
-                    data_compra CURRENT_TIMESTAMP,
-                    data_devolucao CURRENT_TIMESTAMP,
+                    data TEXT NOT NULL,
+                    devolucao TEXT NOT NULL,
+                    data_compra TEXT NOT NULL,
+                    data_devolucao TEXT NOT NULL,
                     FOREIGN KEY(produtor_id) REFERENCES produtores(id))"""
         self.cursor.execute(sql)
 
@@ -293,6 +295,15 @@ class CrudKivy(App):
         self.conexao.commit()
         edt.lbl_resposta.text = 'Produto Cadastrado Com Sucesso!'
 
+    def registrar_venda(self, txt_prod, txt_quant, txt_proid, data, devolucao, data_compra, data_devolucao):
+        edt = sm.get_screen('venda')
+        self.cursor.execute("""INSERT INTO pendencias
+                                (produto, quantidade, produtor_id,
+                                data, devolucao, data_compra, data_devolucao) VALUES
+                                (?, ?, ?, ?, ?,?,?)""",
+                           (txt_prod, txt_quant, txt_proid, data, devolucao, data_compra, data_devolucao))
+        self.conexao.commit()
+        edt.lbl_resposta.text = 'Venda Efetuada Com Sucesso!'
 
     def dados_produtor(self, id, slc):
         self.cursor.execute("SELECT * FROM produtores WHERE id = ?", (id))
@@ -315,6 +326,8 @@ class CrudKivy(App):
     def build(self):
         App.title = "ALRA"
         Window.size = (320, 480)
+        self.criar_tabela()
         self.tabela_produtos()
+        self.tabela_pendencias()
         return sm
 CrudKivy().run()

@@ -207,9 +207,10 @@
         Button:
             text: 'Visualizar'
             on_press: app.dados_produtor(id.text, 'selecionar')
+            on_release: id.text = ''
         Button:
             text: 'Voltar'
-            on_press: root.manager.current = 'venda'
+            on_press: root.manager.current = 'prd'
 
 <VisualizarCadastroCompleto>:
     id: id
@@ -241,6 +242,7 @@
         Button:
             text: 'Visualizar'
             on_press: app.dados_cadastro(id.text, 'selecionar')
+            on_release: id.text = ''
         Button:
             text: 'Voltar'
             on_press: root.manager.current = 'vsr'
@@ -479,6 +481,8 @@
         Button:
             text: 'Cadastrar Produto'
             on_press: app.cadastrar_produto(txt_nmpd.text, txt_gtin.text)
+            on_release: txt_nmpd.text = ''
+            on_release: txt_gtin.text = ''
         Button:
             text: 'Voltar'
             on_press: root.manager.current = 'revenda'
@@ -510,24 +514,24 @@
         Button:
             text: 'Visualizar Produtores'
             on_press: app.selecionar_todos_produtores()
-   #   Label:
-   #        text: ''
-   #        id: data
-   #    Label:
-   #        text: ''
-   #        id: devolucao
-   #    Label:
-   #        text: ''
-   #        id: data_compra
-   #    Label:
-   #        text: ''
-   #        id: data_devolucao
+        TextInput:
+            hint_text: 'Data'
+            id: data
+        TextInput:
+            hint_text: 'Devolução'
+            id: devolucao
+        TextInput:
+            hint_text: 'Data de Compra'
+            id: data_compra
+        TextInput:
+            hint_text: 'Data Prevista Para Devolução'
+            id: data_devolucao
         Label:
             text: 'Aguardando Entrada de Dados...'
             id: lbl_resposta
         Button:
             text: 'Efetuar Venda'
-            on_press: app.registrar_venda(txt_prod, txt_quant, txt_id)
+            on_press: app.registrar_venda(txt_prod, txt_quant, txt_id, data, devolucao, data_compra, data_devolucao)
             on_release: txt_prod.text = ''
             on_release: txt_quant.text = ''
         Button:

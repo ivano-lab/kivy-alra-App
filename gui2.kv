@@ -1,0 +1,54 @@
+<EfetuarVendaScreen>:
+    txt_prod: txt_prod
+    txt_quant: txt_quant
+    txt_id: txt_id
+    #data: data
+    #devolucao: devolucao
+    #data_compra: data_compra
+    #data_devolucao: data_devolucao
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: 'Logado como Revendedor#1'
+        TextInput:
+            hint_text: 'Produto'
+            id: txt_prod
+        Button:
+            text: 'Visualizar Produtos'
+            on_press: app.selecionar_todos_produtos()
+        TextInput:
+            hint_text: 'Quantidade'
+            id: txt_quant
+        TextInput:
+            hint_text: 'Associar Venda ao Produtor: [insira id]'
+            id: txt_id
+        Button:
+            text: 'Visualizar Produtores'
+            on_press: app.selecionar_todos_produtores()
+        TextInput:
+            hint_text: 'Data'
+            id: data
+        TextInput:
+            hint_text: 'Devolução'
+            id: devolucao
+        TextInput:
+            hint_text: 'Data de Compra'
+            id: data_compra
+        TextInput:
+            hint_text: 'Data Prevista Para Devolução'
+            id: data_devolucao
+        Label:
+            text: 'Aguardando Entrada de Dados...'
+            id: lbl_resposta
+        Button:
+            text: 'Efetuar Venda'
+            on_press: app.registrar_venda(txt_prod, txt_quant, txt_id, data, devolucao, data_compra, data_devolucao)
+            on_release: txt_prod.text = ''
+            on_release: txt_quant.text = ''
+        Button:
+            text: 'Voltar'
+            on_press: root.manager.current = 'revenda'
+        Button:
+            text: 'Fechar[x]'
+            on_press: app.root_window.close()
+
