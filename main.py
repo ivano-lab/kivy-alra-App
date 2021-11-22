@@ -263,10 +263,10 @@ class CrudKivy(App):
                     produtor_id INTEGER,
                     produto TEXT NOT NULL,
                     quantidade INTEGER NOT NULL,
-                    data TEXT NOT NULL,
-                    devolucao TEXT NOT NULL,
-                    data_compra TEXT NOT NULL,
-                    data_devolucao TEXT NOT NULL,
+                    data CURRENT_TIMESTAMP,
+                    devolucao CURRENT_TIMESTAMP,
+                    data_compra CURRENT_TIMESTAMP,
+                    data_devolucao CURRENT_TIMESTAMP,
                     FOREIGN KEY(produtor_id) REFERENCES produtores(id))"""
         self.cursor.execute(sql)
 
