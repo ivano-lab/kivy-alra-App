@@ -1,4 +1,16 @@
-import kivy
+git
+remote
+add
+origin
+https: // github.com / ivano - lab / kivy - alra - App.git
+git
+branch - M
+main
+git
+push - u
+origin
+main
+gitimport kivy
 kivy.require('2.0.0')
 import sqlite3
 from datetime import date, datetime
